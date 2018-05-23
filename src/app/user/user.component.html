@@ -1,0 +1,7 @@
+<ul class="users">
+  <li *ngFor="let user of users">
+    <span class="badge">
+        <a routerLink="/detail/{{user.id}}">{{user.schoolName}} </a>
+    </span> • {{ user.region }}
+  </li>
+</ul>

@@ -1,0 +1,34 @@
+<div id="dashboard" *ngIf="currentUser">
+    <h2>Hi {{ currentUser.firstName }}</h2>
+    <div id="details">
+        <img id="logo" src="{{ user.logo }}">
+        <p>{{ currentUser.schoolName }} Dashboard</p>
+        <p>Address: {{ currentUser.address }}</p>
+        <p>Region: {{ currentUser.address }}</p>
+        <p>Description: {{ currentUser.description }}</p>
+        <p>Phone Number: {{ currentUser.tel }}</p>
+        <p>Approval No.: {{ currentUser.approval }}</p>
+        <p>BVN: {{ currentUser.bvn }}</p>
+        <p>Account Number: {{ currentUser.accountNo }}</p>
+    </div>
+    <div>
+        <h3>Transaction Logs:</h3>
+        <div *ngFor="let txnLog of txnLogs">
+            {{ txnLog.payDate }} || {{ txnLog.from }} || {{ txnLog.fee.name }} || {{ txnLog.comments }}  </div>
+    </div>
+    <div *ngFor="let fee of currentUser.fees">
+        {{ fee.name }}
+        {{ fee.amount }}
+        {{ fee.description }}
+    </div>
+    <div id="fees-edit">
+        Add Fees here:
+            <label>Title: <input #feesName> </label>
+            <label>Amount: <input #feesAmount> </label>
+            <label>Description: <input type="text" #feesDesc> </label>
+            <button (click)="add(feesName.value, feesAmount.value, feesDesc.value);feesName.value=''; feesAmount.value='';feesDesc.value=''">add</button>
+    </div>
+
+<!--TODO: show fees on add-->
+<!--TODO: separate (details, txn and fees) into tabs-->
+</div>
