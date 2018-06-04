@@ -1,23 +1,17 @@
-<div id="search-component" class="text-center" style="padding-left: 300px; width: 80% ">
-    <form role="form" id="form-buscar">
-        <div class="form-group">
-            <div class="input-group">
-                <input #searchBox class="form-control" id="search-box" type="text" name="search" placeholder="Search..." (keyup)="search(searchBox.value)"/>
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="submit" routerLink="/schools">
-                        <i class="fa fa-search" aria-hidden="true"></i> Find Schools
-                    </button>
-                </span>
-            </div>
-        </div>
-    </form>
-    <ul class="search-result">
-        <li *ngFor="let user of users | async" >
-            <a routerLink="/school/{{user.id}}">
-                {{user.name}}
-            </a>
-        </li>
-    </ul>
+<div id="search-component" class="text-center" >
+    <input #searchBox id="search-box" name="search" placeholder="Search by School name or location..." (keyup)="search(searchBox.value)"/>
+    <button class="btn btn-default" type="submit" routerLink="/schools">
+        <i class="fas fa-search" aria-hidden="true"></i> List All Schools
+    </button>
+    <div class="search-result">
+        <ul >
+            <li *ngFor="let user of users | async">
+                <a routerLink="/school/{{user.id}}">
+                    {{user.name}}
+                </a>
+            </li>
+        </ul>
+    </div>
 </div>
 
 

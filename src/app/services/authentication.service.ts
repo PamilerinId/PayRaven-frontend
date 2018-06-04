@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import {AlertService} from './alert.service';
 
 
 @Injectable({
@@ -9,22 +10,31 @@ import { catchError, map, tap } from 'rxjs/operators';
 })
 export class AuthenticationService {
 
-  constructor(private http: HttpClient) { }
-  login(email: string, password: string) {
-        return this.http.post<any>('http://127.0.0.1:8000/api/login/', { email: email, password: password })
+  constructor(
+    private http: HttpClient,
+    private alertService: AlertService) { }
+  login(username: string, password: string) {
+        return this.http.post<any>('http://api.payraven.com.ng/v1/auth-login/', { username: username, password: password })
           .pipe(
-            map(user => {
+            map(result => {
               // login successful if there's a jwt token in the response
-              if (user && user.token) {
+              if (result.token && result.user) {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('currentUser', JSON.stringify(user));
+                localStorage.setItem('currentUser', JSON.stringify(result));
+                console.log(result)
+                this.successlog('Login Successful');
               }
-                return user;
+                return result;
             })
           );
     }
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
+        // this.successlog('Logout Successful');
     }
+     /** success logging */
+  private successlog(message: string) {
+    this.alertService.success(message);
+  }
 }

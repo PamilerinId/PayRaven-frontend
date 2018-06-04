@@ -11,7 +11,7 @@ import { UserService } from '../services/user.service';
   styleUrls: ['./user-search.component.css']
 })
 export class UserSearchComponent implements OnInit {
-  users$: Observable<User[]>;
+  users: Observable<User[]>;
   private searchTerms = new Subject<string>();
 
   constructor(private userService: UserService) { }
@@ -21,7 +21,7 @@ export class UserSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.users$ = this.searchTerms.pipe(
+    this.users = this.searchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
       debounceTime(300),
       // ignore new term if same as previous term

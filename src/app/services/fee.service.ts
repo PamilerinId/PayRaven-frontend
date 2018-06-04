@@ -14,22 +14,30 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class FeeService {
-   private feesUrl = 'http://127.0.0.1:8000/api/fees';
+   private feesUrl = 'http://api.payraven.com.ng/v1/fees/';
 
   constructor(
     private http: HttpClient,
     private alertService: AlertService) { }
 
 
-  /** GET  current user fees from the server */
-  getFees(): Observable<Fee[]> {
-    {
+  /** Get all fees from server **/
+  getFees (): Observable<Fee[]> {
     return this.http.get<Fee[]>(this.feesUrl)
       .pipe(
-        tap(fees => this.log(`fetched fees`)),
+        tap(fees => this.successlog(`Retrieved School List`)),
         catchError(this.handleError('getFees', []))
       );
   }
+
+
+  /** GET  current user fees from the server */
+  getUserFees(id: number): Observable<Fee[]> {
+    const url = `${this.feesUrl}/?id=${id}`;
+    return this.http.get<Fee[]>(url).pipe(
+        tap(_ => this.log(`fetched user fees`)),
+        catchError(this.handleError('getFees', []))
+      );
   }
   // TODO: CRUD Methods here
 

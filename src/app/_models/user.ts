@@ -4,23 +4,22 @@ import {Deserializable} from './deserializable';
 
 export interface User {
     id: number;
-    firstName: string;
-    lastName: string;
+    username: string;
+    first_name: string;
+    last_name: string;
     email: string;
     password: string;
     password2: string; // ToDO: implement confirm password
-    schoolName: string ;
+    school_name: string ;
     logo: string;
     description: string;
     address: string;
     tel: number;
     region: string;
-  //  approval: string;
+    approval: string;
     bvn: string;
   //  bank: string;
-    accountNo: number;
-    fees: Fee[];
-
+    account_number: number;
 }
 
  // Todo: bank drop field

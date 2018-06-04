@@ -1,7 +1,12 @@
-<ul class="users">
-  <li *ngFor="let user of users">
-    <span class="badge">
-        <a routerLink="/detail/{{user.id}}">{{user.schoolName}} </a>
-    </span> • {{ user.region }}
-  </li>
-</ul>
+<div class="users card-group">
+    <ul *ngFor="let user of users">
+        <li class="card" style="width: 18rem">
+            <img class="card-img-top" src="{{ user.logo }}" alt="logo">
+            <div class="card-body">
+                <h5 class="card-title">{{ user.school_name }}</h5>
+                <p class="card-text">Location: {{ user.region }} </p>
+                <a routerLink="/school/{{user.id}}" class="btn btn-primary">View Details</a>
+            </div>
+        </li>
+    </ul>
+</div>

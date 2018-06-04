@@ -1,25 +1,50 @@
-<div id="dashboard" *ngIf="currentUser">
-    <h2>Hi {{ currentUser.firstName }}</h2>
-    <div id="details">
-        <img id="logo" src="{{ user.logo }}">
-        <p>{{ currentUser.schoolName }} Dashboard</p>
-        <p>Address: {{ currentUser.address }}</p>
-        <p>Region: {{ currentUser.address }}</p>
-        <p>Description: {{ currentUser.description }}</p>
-        <p>Phone Number: {{ currentUser.tel }}</p>
-        <p>Approval No.: {{ currentUser.approval }}</p>
-        <p>BVN: {{ currentUser.bvn }}</p>
-        <p>Account Number: {{ currentUser.accountNo }}</p>
+<div class="wrapper" *ngIf="currentUser">
+    <nav id="sidebar">
+        <div class="sidebar-header">Hi {{ currentUser.username}}</div>
+        <ul class="list-unstyled components">
+            <li><a href="">Admin Details</a> </li>
+            <li><a href="">Contact Details</a> </li>
+            <li><a href="">Payment/Fee Details</a> </li>
+            <li><a href="">Transaction Logs</a> </li>
+        </ul>
+    </nav>
+    <div id="content">
+        <h4>OVERVIEW</h4>
+        <div id="details" class="card">
+            <img class="card-img-top" src="{{ currentUser.logo }}">
+            <p class="card-title">{{ currentUser.school_name }}</p>
+            <p class="card-title">Approval No.: {{ currentUser.approval }}</p>
+            <p class="card-title">BVN: {{ currentUser.bvn }}</p>
+            <p class="card-title">Account Number: {{ currentUser.accountNo }}</p>
+        </div>
+        <div class="fees card-group" *ngIf="fees">
+            <ul *ngFor="let fee of fees">
+                <li class="card">
+                  <div class="card-body">
+                      <h5 class="card-title">{{ fee.name }}</h5>
+                      <p class="card-text">Amount: N{{ fee.amount }}</p>
+                      <p class="card-text">Description: {{ fee.description }}</p>
+                  </div>
+                </li>
+            </ul>
+        </div>
+        <div *ngIf="!fees">
+            <h4 class="card-title"> You have not added any fees yet</h4>
+        </div>
+        <div class="txns card" *ngIf="txnLogs">
+            {{ txnLogs.pay_date }}
+        </div>
+        <div class="card" *ngIf="!txnLogs">
+            <h4 class="card-title"> No transactions have taken place</h4>
+        </div>
+
     </div>
-    <div>
+</div>
+
+<!--    <div>
         <h3>Transaction Logs:</h3>
         <div *ngFor="let txnLog of txnLogs">
             {{ txnLog.payDate }} || {{ txnLog.from }} || {{ txnLog.fee.name }} || {{ txnLog.comments }}  </div>
-    </div>
-    <div *ngFor="let fee of currentUser.fees">
-        {{ fee.name }}
-        {{ fee.amount }}
-        {{ fee.description }}
     </div>
     <div id="fees-edit">
         Add Fees here:
@@ -27,8 +52,7 @@
             <label>Amount: <input #feesAmount> </label>
             <label>Description: <input type="text" #feesDesc> </label>
             <button (click)="add(feesName.value, feesAmount.value, feesDesc.value);feesName.value=''; feesAmount.value='';feesDesc.value=''">add</button>
-    </div>
+    </div> -->
 
 <!--TODO: show fees on add-->
-<!--TODO: separate (details, txn and fees) into tabs-->
-</div>
+<!--TODO: separate (details, txn(table) and fees) into tabs-->

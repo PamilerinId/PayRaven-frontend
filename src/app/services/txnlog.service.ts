@@ -13,7 +13,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class TxnlogService {
-  private txnLogsUrl = 'http://127.0.0.1:8000/api/transactions';
+  private txnLogsUrl = 'http://api.payraven.com.ng/v1/transactions/';
 
   constructor(
     private http: HttpClient,
@@ -23,36 +23,19 @@ export class TxnlogService {
   getTxnLogs(): Observable<Transaction[]> {
     return this.http.get<Transaction[]>(this.txnLogsUrl)
       .pipe(
-        tap(txnlogs => this.successlog(`fetched transaction logs`)),
+        tap(txnlogs => this.successlog(`Fetched transaction logs`)),
         catchError(this.handleError('getTxnLogs', []))
       );
   }
 
-    /** GET transaction by user id. Return `undefined` when id not found */
-  getTxnLogNo404<Data>(id: number): Observable<Transaction> {
+     /** GET  current user fees from the server */
+  getUserTxnLogs(id: number): Observable<Transaction[]> {
     const url = `${this.txnLogsUrl}/?paid_to=${id}`;
-    return this.http.get<Transaction>(url)
-      .pipe(
-        map(txnlogs => txnlogs[0]), // returns a {0|1} element array
-        tap(u => {
-          const outcome = u ? `fetched` : `did not find`;
-          this.log(`${outcome}  id=${id}`);
-        }),
-        catchError(this.handleError<Transaction>(`getTxnLogNo404 id=${id}`))
+    return this.http.get<Transaction[]>(url).pipe(
+        tap(_ => this.log(`fetched user transactions`)),
+        catchError(this.handleError('getFees', []))
       );
   }
-
-    /** GET transaction by user id. Will 404 if id not found */
-    // testing with observable array instead of single observable
-  getUserTxnLogs(id: number): Observable<Transaction> {
-    const url = `${this.txnLogsUrl}/?paid_to=${id}`;
-    return this.http.get<Transaction>(url)
-      .pipe(
-        tap(_ => this.successlog(`fetched via user_id=${id}`)),
-        catchError(this.handleError<Transaction>(`getUserTxnLogs user_id=${id}`))
-    );
-  }
-
   /**
    * Handle Http operation that failed.
    * Let the app continue.

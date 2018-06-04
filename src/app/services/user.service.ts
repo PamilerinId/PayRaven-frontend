@@ -15,9 +15,9 @@ const httpOptions = {
 })
 
 export class UserService {
-  private usersUrl = 'http://127.0.0.1:8000/api/schools/';
-  private registerUrl = 'http://127.0.0.1:8000/api/register/'
-  user: User;
+  private usersUrl = 'http://api.payraven.com.ng/v1/user-list/';
+  private userUrl = 'http://api.payraven.com.ng/v1/user/';
+  private registerUrl = 'http://api.payraven.com.ng/v1/register/';
 
   constructor(
     private http: HttpClient,
@@ -27,10 +27,11 @@ export class UserService {
   getUsers (): Observable<User[]> {
     return this.http.get<User[]>(this.usersUrl)
       .pipe(
-        tap(users => this.successlog(`fetched users`)),
+        tap(users => this.successlog(`Retrieved School List`)),
         catchError(this.handleError('getUsers', []))
       );
   }
+
 
     /** GET user by id. Return `undefined` when id not found */
   getUserNo404<Data>(id: number): Observable<User> {
@@ -39,7 +40,7 @@ export class UserService {
       .pipe(
         map(users => users[0]), // returns a {0|1} element array
         tap(u => {
-          const outcome = u ? `fetched` : `did not find`;
+          const outcome = u ? `Retrieved` : `Did not find`;
           this.log(`${outcome} user id=${id}`);
         }),
         catchError(this.handleError<User>(`getUser id=${id}`))
@@ -47,10 +48,20 @@ export class UserService {
   }
 
     /** GET user by id. Will 404 if id not found */
+    // TODO: query by name
   getUser(id: number): Observable<User> {
     const url = `${this.usersUrl}/${id}`;
     return this.http.get<User>(url).pipe(
-      tap(_ => this.successlog(`fetched user id=${id}`)),
+      tap(_ => this.successlog(`Retrieved School details`)),
+      catchError(this.handleError<User>(`getUser id=${id}`))
+    );
+  }
+
+    /** GET user by id. Will 404 if id not found */
+  getProfile(id: number): Observable<User> {
+    const url = `${this.userUrl}/${id}`;
+    return this.http.get<User>(url).pipe(
+      tap(_ => this.successlog(`Retrieved Profile`)),
       catchError(this.handleError<User>(`getUser id=${id}`))
     );
   }
@@ -61,8 +72,8 @@ export class UserService {
       // if not search term, return empty user array.
       return of([]);
     }
-    return this.http.get<User[]>(`api/schools/?name=${term}`).pipe(
-      tap(_ => this.successlog(`found users matching "${term}"`)),
+    return this.http.get<User[]>(`${this.usersUrl}/?search=${term}`).pipe(
+      tap(users => this.successlog(`found users matching "${term}"`)),
       catchError(this.handleError<User[]>('searchUsers', []))
     );
   }
@@ -71,7 +82,7 @@ export class UserService {
   addUser(user: User): Observable<User> {
     return this.http.post<User>(this.registerUrl, user, httpOptions)
       .pipe(
-      tap(user => this.successlog(`added user w/ id=${user.id}`)),
+      tap(newuser => this.successlog(`Registered School w/ id=${user.id}`)),
       catchError(this.handleError<User>('addUser'))
     );
   }
@@ -81,7 +92,7 @@ export class UserService {
     const id = typeof user === 'number' ? user : user.id;
     const url = `${this.usersUrl}/${id}`;
     return this.http.delete<User>(url, httpOptions).pipe(
-      tap(_ => this.successlog(`deleted user id=${id}`)),
+      tap(_ => this.successlog(`Deleted School id=${id}`)),
       catchError(this.handleError<User>('deleteUser'))
     );
   }
@@ -89,7 +100,7 @@ export class UserService {
   /** PUT: update the user on the server */
   updateUser (user: User): Observable<any> {
     return this.http.put(this.usersUrl, user, httpOptions).pipe(
-      tap(_ => this.successlog(`updated user id=${user.id}`)),
+      tap(_ => this.successlog(`Updated school id=${user.id}`)),
       catchError(this.handleError<any>('updateUser'))
     );
   }

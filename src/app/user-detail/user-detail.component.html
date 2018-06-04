@@ -1,24 +1,34 @@
-<button (click)="goBack()">go back</button>
-<div *ngIf="user">
-  <img src="{{ user.logo }}"><h2>Welcome to {{ user.schoolName }} details page </h2>
-    <div>
-        <p>Name: {{ user.schoolName }}</p>
-        <p>Address: {{ user.address }}</p>
-        <p>Region: {{ user.region }}</p>
-        <p>Phone Number: {{ user.tel }}</p>
+<div class="row">
+    <div class="col-md-3"> <button class="btn" (click)="goBack()"><i class="fas fa-angle-double-left"></i> Back</button></div>
+    <div class="col-md-7">
+        <div class="card mb-4" *ngIf="user">
+            <h2 class="card-header" style="text-align: center">Welcome to {{ user.school_name }} </h2>
+            <img class="card-img-top" src="{{ user.logo }}">
+            <div class="card-body">
+                <p class="card-title">Name: {{ user.school_name }}</p>
+                <p class="card-title">Address: {{ user.address }}</p>
+                <p class="card-title">Region: {{ user.region }}</p>
+                <p class="card-title">Phone Number: {{ user.tel }}</p>
+                <p class="card-text">Description: {{ user.description }}</p>
+                <h3 class="card-title">Fees</h3>
+                <div class="fees card-group" *ngIf="fees">
+                        <ul *ngFor="let fee of fees">
+                            <li class="card">
+                              <div class="card-body">
+                                  <h5 class="card-title">{{ fee.name }}</h5>
+                                  <p class="card-text">Amount: N{{ fee.amount }}</p>
+                                  <p class="card-text">Description: {{ fee.description }}</p>
+                                  <a href="#" class="btn btn-primary">Pay</a>
+                              </div>
+                            </li>
+                        </ul>
+                  </div>
+                    <p class="card-title">click a fee card to pay</p>
+                <div *ngIf="!fees">
+                    <h4 class="card-title"> No fees available</h4>
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        <p>Description: {{ user.description }}</p>
-    </div>
-    <h3>Fees</h3>
-    <p>click a fee card to pay</p>
-    <div *ngFor="let fee of user.fees">
-        <p>{{ fee.name }}</p>
-        <p>{{ fee.amount }}</p>
-        <p>{{ fee.description }}</p>
-
-    </div>
-
 </div>
-<!--TODO: DESIGN Fees Cards-->
-<!--Todo: pay button-->
+<!--TODO: list fees-->

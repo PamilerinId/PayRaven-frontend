@@ -24,18 +24,18 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      first_name: ['', Validators.required],
+      last_name: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      schoolName: ['', Validators.required],
+      school_name: ['', Validators.required],
       logo: ['', Validators.required],
       description: ['', Validators.required],
       address: ['', Validators.required],
-      tel: ['', Validators.required, Validators.minLength(11)],
+      tel: ['', Validators.required],
       region: ['', Validators.required],
-      bvn: ['', Validators.required, Validators.minLength(10)],
-      accountNo: ['', Validators.required, Validators.minLength(20)],
+      bvn: ['', Validators.required],
+      account_number: ['', Validators.required],
     });
   }
   // convenience getter for easy access to form fields
