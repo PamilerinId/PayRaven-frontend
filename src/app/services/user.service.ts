@@ -15,7 +15,7 @@ const httpOptions = {
 })
 
 export class UserService {
-  private usersUrl = 'http://api.payraven.com.ng/v1/user-list/';
+  private usersUrl = 'http://api.payraven.com.ng/v1/user-list';
   private userUrl = 'http://api.payraven.com.ng/v1/user/';
   private registerUrl = 'http://api.payraven.com.ng/v1/register/';
 
@@ -80,9 +80,10 @@ export class UserService {
   //////// Save methods //////////
   /** POST: add a new user to the server */
   addUser(user: User): Observable<User> {
+    console.log(user);
     return this.http.post<User>(this.registerUrl, user, httpOptions)
       .pipe(
-      tap(newuser => this.successlog(`Registered School w/ id=${user.id}`)),
+      tap(_ => this.successlog(`Registered School w/ id=${user.id}`)),
       catchError(this.handleError<User>('addUser'))
     );
   }

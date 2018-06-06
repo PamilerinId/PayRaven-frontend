@@ -14,7 +14,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class FeeService {
-   private feesUrl = 'http://api.payraven.com.ng/v1/fees/';
+   private feesUrl = 'http://api.payraven.com.ng/v1/fees';
 
   constructor(
     private http: HttpClient,

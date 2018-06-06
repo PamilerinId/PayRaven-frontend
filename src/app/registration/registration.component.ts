@@ -24,6 +24,7 @@ export class RegistrationComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
+      username: ['', Validators.required],
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       email: ['', Validators.required],
@@ -47,7 +48,6 @@ export class RegistrationComponent implements OnInit {
     if (this.registerForm.invalid) {
       return;
     }
-
     this.loading = true;
     this.userService.addUser(this.registerForm.value)
       .pipe(first())

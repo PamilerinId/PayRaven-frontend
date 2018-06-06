@@ -9,14 +9,14 @@ export interface User {
     last_name: string;
     email: string;
     password: string;
-    password2: string; // ToDO: implement confirm password
+    // password2: string; // ToDO: implement confirm password
     school_name: string ;
     logo: string;
     description: string;
     address: string;
     tel: number;
     region: string;
-    approval: string;
+  // approval: number;
     bvn: string;
   //  bank: string;
     account_number: number;

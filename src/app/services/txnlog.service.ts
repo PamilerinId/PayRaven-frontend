@@ -13,7 +13,7 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class TxnlogService {
-  private txnLogsUrl = 'http://api.payraven.com.ng/v1/transactions/';
+  private txnLogsUrl = 'http://api.payraven.com.ng/v1/transactions';
 
   constructor(
     private http: HttpClient,
