@@ -26,7 +26,8 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
-# Error
-1. Login only works on admin account
-2. Dashboard doesn't route on unauthorized access
-3.
+# TODO
+1. Overall UI design
+2. Login and Resgistration services
+3. Payment views and services
+4. Dashboard component
